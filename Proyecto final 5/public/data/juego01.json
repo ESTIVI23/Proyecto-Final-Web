@@ -1,0 +1,57 @@
+[
+  {
+    "id": 1,
+    "animal": "Vaca",
+    "icono": "🐮",
+    "pregunta": "¿Qué come la vaca?",
+    "opciones": [
+      { "texto": "Pasto", "esCorrecta": true },
+      { "texto": "Carne", "esCorrecta": false },
+      { "texto": "Banana", "esCorrecta": false }
+    ]
+  },
+  {
+    "id": 2,
+    "animal": "Gallina",
+    "icono": "🐔",
+    "pregunta": "¿Qué come la gallina?",
+    "opciones": [
+      { "texto": "Maíz", "esCorrecta": true },
+      { "texto": "Pasto", "esCorrecta": false },
+      { "texto": "Pescado", "esCorrecta": false }
+    ]
+  },
+  {
+    "id": 3,
+    "animal": "Chancho",
+    "icono": "🐷",
+    "pregunta": "¿Qué come el chancho?",
+    "opciones": [
+      { "texto": "Todo lo que encuentra", "esCorrecta": true },
+      { "texto": "Solo Pasto", "esCorrecta": false },
+      { "texto": "Solo Carne", "esCorrecta": false }
+    ]
+  },
+  {
+    "id": 4,
+    "animal": "Oveja",
+    "icono": "🐑",
+    "pregunta": "¿Qué come la oveja?",
+    "opciones": [
+      { "texto": "Pasto", "esCorrecta": true },
+      { "texto": "Hamburguesa", "esCorrecta": false },
+      { "texto": "Pizza", "esCorrecta": false }
+    ]
+  },
+  {
+    "id": 5,
+    "animal": "Caballo",
+    "icono": "🐴",
+    "pregunta": "¿Qué come el caballo?",
+    "opciones": [
+      { "texto": "Pasto y Zanahoria", "esCorrecta": true },
+      { "texto": "Pollo", "esCorrecta": false },
+      { "texto": "Helado", "esCorrecta": false }
+    ]
+  }
+]
