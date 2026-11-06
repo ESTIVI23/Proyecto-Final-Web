@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDatosJuego } from '../context/DatosDelJuego';
+import { useDatosJuego } from '../hooks/useDatosJuegos';
 import { Container, Box, Typography, TextField, Button, Paper } from '@mui/material';
 
 const Login = () => {

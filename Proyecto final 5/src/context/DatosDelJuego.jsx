@@ -1,7 +1,7 @@
-import { createContext, useState, useContext } from 'react';
+import { createContext, useState,  } from 'react';
 
 // 1. Creación del Contexto
-const JuegoContext = createContext();
+export const JuegoContext = createContext();
 
 // 2. Componente Proveedor (Provider) que envuelve la app es un
 //  componente funcional
@@ -38,5 +38,3 @@ export const ProveedorDeDatosDelJuego = ({ children }) => {
   );
 };
 
-// 3. Hook personalizado para usar el contexto fácilmente en las pantallas
-export const useDatosJuego = () => useContext(JuegoContext);
