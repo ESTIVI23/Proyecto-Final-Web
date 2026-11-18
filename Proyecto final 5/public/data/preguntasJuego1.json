@@ -2,6 +2,7 @@
   {
     "id": 1,
     "animal": "Vaca",
+    "imagen": "/imagenes/juego1/vaca.png",
     "icono": "🐮",
     "pregunta": "¿Qué come la vaca?",
     "opciones": [
@@ -13,6 +14,7 @@
   {
     "id": 2,
     "animal": "Gallina",
+    "imagen": "/imagenes/juego1/Gallina.png",
     "icono": "🐔",
     "pregunta": "¿Qué come la gallina?",
     "opciones": [
@@ -24,6 +26,7 @@
   {
     "id": 3,
     "animal": "Chancho",
+    "imagen": "/imagenes/juego1/chancho.png",
     "icono": "🐷",
     "pregunta": "¿Qué come el chancho?",
     "opciones": [
@@ -35,6 +38,7 @@
   {
     "id": 4,
     "animal": "Oveja",
+    "imagen": "/imagenes/juego1/oveja.png",
     "icono": "🐑",
     "pregunta": "¿Qué come la oveja?",
     "opciones": [
@@ -46,6 +50,7 @@
   {
     "id": 5,
     "animal": "Caballo",
+    "imagen": "/imagenes/juego1/caballo.png",
     "icono": "🐴",
     "pregunta": "¿Qué come el caballo?",
     "opciones": [

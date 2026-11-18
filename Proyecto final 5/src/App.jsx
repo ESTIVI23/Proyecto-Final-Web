@@ -1,11 +1,15 @@
 import { Outlet } from "react-router-dom";
-import { Container } from "@mui/material";
+import {  CssBaseline  } from "@mui/material";
+
+
 
 const App = () => {
   return (
-    <Container maxWidth="md">
-      <Outlet />
-    </Container>
+    <>
+    <CssBaseline /> {/* Limpia márgenes y bordes blancos del navegador */}
+      <Outlet />     {/* Carga cada pantalla con libertad total de ancho */}
+    </>
+   
   );
 };
 
