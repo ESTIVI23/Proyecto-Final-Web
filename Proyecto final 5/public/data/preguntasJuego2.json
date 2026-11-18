@@ -1,0 +1,132 @@
+
+[
+  {
+    "id": 1,
+    "titulo": "Ronda 1",
+    "opciones": [
+      {
+        "nombre": "Perro",
+        "imagen": "/imagenes/juego2/perro.png",
+        "esIntruso": false
+      },
+      {
+        "nombre": "Gato",
+        "imagen": "/imagenes/juego2/gato.png",
+        "esIntruso": false
+      },
+      {
+        "nombre": "León",
+        "imagen": "/imagenes/juego2/leon.png",
+        "esIntruso": true
+      }
+    ],
+    "mensajeCorrecto": "¡Genial! Sacaste al León. ¡La granja está a salvo!",
+    "mensajeIncorrecto": "¡Uy! Ese animal sí es de la granja."
+  },
+
+
+  {
+    "id": 2,
+    "titulo": "Ronda 2",
+    "opciones": [
+      {
+        "nombre": "Vaca",
+        "imagen": "/imagenes/juego2/vaca.png",
+        "esIntruso": false
+      },
+      {
+        "nombre": "Oveja",
+        "imagen": "/imagenes/juego2/oveja.png",
+        "esIntruso": false
+      },
+      {
+        "nombre": "Cocodrilo",
+        "imagen": "/imagenes/juego2/cocodrilo.png",
+        "esIntruso": true
+      }
+    ],
+    "mensajeCorrecto": "¡Bien hecho! El Cocodrilo no vive en la granja.",
+    "mensajeIncorrecto": "¡Uy! Ese animal sí es de la granja."
+  },
+
+
+
+  {
+    "id": 3,
+    "titulo": "Ronda 3",
+    "opciones": [
+      {
+        "nombre": "Gallina",
+        "imagen": "/imagenes/juego2/gallina.png",
+        "esIntruso": false
+      },
+      {
+        "nombre": "Chancho",
+        "imagen": "/imagenes/juego2/chancho.png",
+        "esIntruso": false
+      },
+      {
+        "nombre": "Elefante",
+        "imagen": "/imagenes/juego2/elefante.png",
+        "esIntruso": true
+      }
+    ],
+    "mensajeCorrecto": "¡Excelente! El Elefante es un animal salvaje.",
+    "mensajeIncorrecto": "¡Uy! Ese animal sí es de la granja."
+  },
+
+
+
+  {
+    "id": 4,
+    "titulo": "Ronda 4",
+    "opciones": [
+      {
+        "nombre": "Caballo",
+        "imagen": "/imagenes/juego2/caballo.png",
+        "esIntruso": false
+      },
+      {
+        "nombre": "Vaca",
+        "imagen": "/imagenes/juego2/vaca.png",
+        "esIntruso": false
+      },
+      {
+        "nombre": "Tiburón",
+        "imagen": "/imagenes/juego2/tiburon.png",
+        "esIntruso": true
+      }
+    ],
+    "mensajeCorrecto": "¡Perfecto! El Tiburón vive en el mar.",
+    "mensajeIncorrecto": "¡Uy! Ese animal sí es de la granja."
+  },
+
+
+
+
+  {
+    "id": 5,
+    "titulo": "Ronda 5",
+    "opciones": [
+      {
+        "nombre": "Oveja",
+        "imagen": "/imagenes/juego2/oveja.png",
+        "esIntruso": false
+      },
+      {
+        "nombre": "Perro",
+        "imagen": "/imagenes/juego2/perro.png",
+        "esIntruso": false
+      },
+      {
+        "nombre": "Pingüino",
+        "imagen": "/imagenes/juego2/pinguino.png",
+        "esIntruso": true
+      }
+    ],
+    "mensajeCorrecto": "¡Fantástico! El Pingüino vive en el hielo.",
+    "mensajeIncorrecto": "¡Uy! Ese animal sí es de la granja."
+  }
+
+  
+]

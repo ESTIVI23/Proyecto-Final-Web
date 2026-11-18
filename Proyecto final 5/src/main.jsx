@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
 
 import { routes } from './routes/routes';
-import { ProveedorDeDatosDelJuego } from './context/DatosDelJuego';
+import { ProveedorDeDatosDelJuego } from './datosPrincipales/DatosDelJuego.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
