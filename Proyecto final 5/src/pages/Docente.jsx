@@ -30,7 +30,7 @@ useEffect(() => {
 
       if (respuesta.data && respuesta.data.length > 0) {
         setNombreDocente(respuesta.data[0].usuario);
-      }
+      }   
 
     } catch (error) {
       console.error("Error al leer docentes.json con axios:", error);
