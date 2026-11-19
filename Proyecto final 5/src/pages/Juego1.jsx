@@ -1,43 +1,32 @@
-// 1\. React (para manejar memoria y efectos) 
+// React (para manejar memoria y efectos) 
 import { useState, useEffect } from 'react';
 
-// 2\. React Router (para viajar de pantalla) 
+// React Router (para viajar de pantalla) 
 import { useNavigate } from 'react-router-dom';
 
-// 3\. Tu Hook (para guardar los puntos) 
+//Tu Hook (para guardar los puntos) 
 import { useDatosJuego } from '../hooks/useDatosJuegos';
-
-// 4\. Tu Servicio (para leer el JSON con Axios) 
 import { obtenerPreguntasJuego1 } from '../servicios/servicioPreguntas';
-
-// para los estilos de Material UI
 import { Box } from '@mui/material';
-
-
-
-
-
 
 const Juego1 = () => {
 // estados 
-//  Nace vacío [] al iniciar la pantalla
-const [preguntas, setPreguntas] = useState([]);
 
+  const [preguntas, setPreguntas] = useState([]);
 
-const [rondaActual, setRondaActual] = useState(
+  const [rondaActual, setRondaActual] = useState(
   () => { return Number(localStorage.getItem('rondaJ1')) || 0; });    // xdxdxdxdxdxdxdxdxdxd
 
-// Estado nuevo: para saber si Axios sigue descargando el JSON
-const [cargando, setCargando] = useState(true);
+  // Estado nuevo: para saber si Axios sigue descargando el JSON
+  const [cargando, setCargando] = useState(true);
+
+  //hooks globales y Rutas
+  const { setPuntajeJ1 } = useDatosJuego();
+
+  const navigate = useNavigate();
 
 
-//hooks globales y Rutas
-const { setPuntajeJ1 } = useDatosJuego();
-
-const navigate = useNavigate();
-
-
-const { puntajeJ1 } = useDatosJuego(); // 👈 Extraés puntajeJ1 de tu mochila
+  const { puntajeJ1 } = useDatosJuego(); // 👈 Extraés puntajeJ1 de tu mochila
 
 // Se ejecuta automáticamente al abrir la pantalla
 useEffect(() => {
@@ -49,7 +38,7 @@ useEffect(() => {
       //  Guarda el arreglo completo en el estado
       setPreguntas(datos);
       setCargando(false);
-      // 👈 Ya llegaron las preguntas, avisamos que terminó de cargar
+      //  Ya llegaron las preguntas, avisamos que terminó de cargar
 
     })
     .catch((error) => {
@@ -64,27 +53,22 @@ useEffect(() => {
 // Este guarda la ronda en el navegador cada vez que avanza (0, 1, 2...)
 useEffect(() => { localStorage.setItem('rondaJ1', rondaActual); }, [rondaActual]);
 
-
-
-
-
-
-// --- PARTE 4: LÓGICA DE CLIC EN LA COMIDA ---
+//  LÓGICA DE CLIC EN LA COMIDA ---
 const manejarRespuesta = (opcionSeleccionada) => {
 
-// 1\. Averiguamos si la opción elegida es la correcta
+//  Averiguamos si la opción elegida es la correcta
 const textoOpcion = opcionSeleccionada.texto ? opcionSeleccionada.texto :
 opcionSeleccionada;
      const esCorrecta = opcionSeleccionada.esCorrecta !== undefined
      ? opcionSeleccionada.esCorrecta
      : textoOpcion === ronda.correcta;
 
-     // 2\. Si acertó, le sumamos 10 puntos en la mochila global
+     //  Si acertó, le sumamos 10 puntos en la mochila global
      if (esCorrecta) {
        setPuntajeJ1((puntajeAnterior) => puntajeAnterior + 10);
       }
 
-    // 3\. Verificamos si quedan más rondas o si terminamos
+    //  Verificamos si quedan más rondas o si terminamos
     
    if (rondaActual < preguntas.length - 1) {
 
@@ -96,23 +80,16 @@ opcionSeleccionada;
 
 }
 
-   ////////////////////////// 
-
 };
 
-
-
-
-// 1. Si Axios todavía está buscando el JSON, mostramos este texto
+// Si Axios todavía está buscando el JSON, mostramos este texto
 if (cargando) {
   return <h2 style={{ textAlign: 'center' }} >Cargando juego...</h2>;
 }
-
-// 2. Si ocurrió un problema y el JSON vino vacío
+//  Si ocurrió un problema y el JSON vino vacío
 if (!preguntas.length) {
   return <h2 style={{ textAlign: 'center' }} >No se encontraron preguntas.</h2>;
 }
-
 // 3. Extraemos el animal de la ronda actual
 // Como rondaActual vale 0, saca la primera ronda.
 const ronda = preguntas[rondaActual];
