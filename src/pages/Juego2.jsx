@@ -55,7 +55,6 @@ const Juego2 = () => {
                });
      }, []);
 
-
      //  Guarda la ronda en localStorage por si el alumno presiona F5
      useEffect(() => {
           localStorage.setItem('rondaJ2', rondaActual);

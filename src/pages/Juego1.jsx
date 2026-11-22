@@ -8,11 +8,10 @@ import { obtenerPreguntasJuego1 } from '../servicios/servicioPreguntas';
 import { Box, Typography } from '@mui/material';
 
 const Juego1 = () => {
-  // estados 
   const [preguntas, setPreguntas] = useState([]);
   const [rondaActual, setRondaActual] = useState(
-    () => { return Number(localStorage.getItem('rondaJ1')) || 0; });    // xdxdxdxdxdxdxdxdxdxd
-  // Estado nuevo: para saber si Axios sigue descargando el JSON
+    () => { return Number(localStorage.getItem('rondaJ1')) || 0; });
+
   const [cargando, setCargando] = useState(true);
   const [mensaje, setMensaje] = useState(null);
   const [bloqueado, setBloqueado] = useState(false);
@@ -102,7 +101,6 @@ const Juego1 = () => {
   }
   console.log("Ronda actual:", rondaActual);
   console.log("Animal actual:", ronda.animal);
-  // --- PARTE DE PANTALLA DEL JUEGO (1. RONDA) ---
 
   return (
     <Box
@@ -139,10 +137,6 @@ const Juego1 = () => {
       >
         ⭐ {puntajeJ1} pts
       </Box>
-
-
-
-      {/* Título de la Ronda \*/}
       <Typography
         variant="h5"
         fontWeight="bold"
@@ -217,12 +211,9 @@ const Juego1 = () => {
             key={index}
             onClick={() => manejarRespuesta(opcion)}
             disabled={bloqueado}
-
             style={{
               padding: '10px 20px',
               fontSize: '28px',
-
-
               cursor: bloqueado ? 'not-allowed' : 'pointer', //  Manito normal o ícono de bloqueado 
               opacity: bloqueado ? 0.6 : 1, // Transparencia mientras espera
               borderRadius: '8px'
@@ -232,11 +223,8 @@ const Juego1 = () => {
           </button>
         ))}
       </Box>
-
       {/* Mensaje de acierto o error */}
-
       {mensaje && (
-
         <Box sx={{ mt: 3 }}>
           <Typography
             variant="h5"
@@ -254,7 +242,6 @@ const Juego1 = () => {
             {mensaje.texto}
           </Typography>
         </Box>
-
       )}
     </Box>
   );
