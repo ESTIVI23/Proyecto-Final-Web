@@ -6,6 +6,8 @@ import Juego1 from "../pages/Juego1";
 import Juego2 from "../pages/Juego2";
 import Resultados from "../pages/Resultados";
 import Docente from "../pages/Docente"; //  Importás el componente acá
+import Error from "../pages/Error";
+
 //  //routes es el objeto que creamos 
 export const routes = createBrowserRouter([
   {
@@ -34,6 +36,11 @@ export const routes = createBrowserRouter([
         element: <Docente />
 
 
+      },
+      {
+
+        path: "/error",
+        element: <Error />
       }
 
     ]

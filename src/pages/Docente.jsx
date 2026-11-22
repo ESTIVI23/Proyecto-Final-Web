@@ -2,54 +2,50 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDatosJuego } from '../hooks/useDatosJuegos';
-import { Container, Typography, Button, Paper,Box, Table,  TableBody, 
-TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import {
+  Container, Typography, Button, Paper, Box, Table, TableBody,
+  TableCell, TableContainer, TableHead, TableRow
+} from '@mui/material';
 
 const Docente = () => {
 
   const navigate = useNavigate();
   //  Estado para guardar la lista de alumnos que jugaron 
   const [historial, setHistorial] = useState([]);
-
   const { setNombre, reiniciarJuego } = useDatosJuego();
+  // Inicializa vacío o como 'Docente' mientras carga el JSON 
+  const [nombreDocente, setNombreDocente] = useState('Docente');
+  //  Al cargar la pantalla, leemos el localStorage 
 
-// Inicializa vacío o como 'Docente' mientras carga el JSON 
-   const [nombreDocente, setNombreDocente] = useState('Docente');
-   //  Al cargar la pantalla, leemos el localStorage 
-
- useEffect(() => {
-   const datosGuardados = JSON.parse(localStorage.getItem('historialJuegos')) || [];
+  useEffect(() => {
+    const datosGuardados = JSON.parse(localStorage.getItem('historialJuegos')) || [];
     setHistorial(datosGuardados);
-  
   }, []);
 
-useEffect(() => {
-  const obtenerDocente = async () => {
-    try {
-      const respuesta = await axios.get('/data/docentes.json');
+  useEffect(() => {
+    const obtenerDocente = async () => {
+      try {
+        const respuesta = await axios.get('/data/docentes.json');
+        if (respuesta.data && respuesta.data.length > 0) {
+          setNombreDocente(respuesta.data[0].usuario);
+        }
+      } catch (error) {
+        console.error("Error al leer docentes.json con axios:", error);
+      }
+    };
+    obtenerDocente();
+  }, []);
 
-      if (respuesta.data && respuesta.data.length > 0) {
-        setNombreDocente(respuesta.data[0].usuario);
-      }   
-
-    } catch (error) {
-      console.error("Error al leer docentes.json con axios:", error);
-    }
+  //  Función para borrar todo el historial si el profe quiere reiniciar
+  const borrarHistorial = () => {
+    localStorage.removeItem('historialJuegos');
+    setHistorial([]);
   };
-
-  obtenerDocente();
-
-}, []);
-
-//  Función para borrar todo el historial si el profe quiere reiniciar
-const borrarHistorial = ()=> {
-   localStorage.removeItem('historialJuegos');
-    setHistorial([]); };
 
   return (
     <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
       <Paper elevation={4} sx={{ p: 4, borderRadius: 4, textAlign: 'center' }}>
-        
+
         <Typography variant="h4" fontWeight="bold" color="primary" gutterBottom>
           Panel del Docente 👩‍🏫
         </Typography>
@@ -96,9 +92,9 @@ const borrarHistorial = ()=> {
         {/* Botones de acción */}
         <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', mt: 3, flexWrap: 'wrap' }}>
           {historial.length > 0 && (
-            <Button 
-              variant="outlined" 
-              color="error" 
+            <Button
+              variant="outlined"
+              color="error"
               onClick={borrarHistorial}
               sx={{ borderRadius: 3 }}
             >
@@ -106,9 +102,9 @@ const borrarHistorial = ()=> {
             </Button>
           )}
 
-          <Button 
-            variant="contained" 
-            color="primary" 
+          <Button
+            variant="contained"
+            color="primary"
             onClick={() => navigate('/')}
             sx={{ borderRadius: 3 }}
           >
@@ -128,7 +124,7 @@ const borrarHistorial = ()=> {
           >
             🎮 Jugar como Docente
           </Button>
-          
+
         </Box>
 
       </Paper>
