@@ -7,16 +7,19 @@
       {
         "nombre": "Perro",
         "imagen": "/imagenes/juego2/perro.png",
+        "sonido": "/sonidos/juego2/perro.mp3",
         "esIntruso": false
       },
       {
         "nombre": "Gato",
         "imagen": "/imagenes/juego2/gato.png",
+        "sonido": "/sonidos/juego2/gato.mp3",
         "esIntruso": false
       },
       {
         "nombre": "León",
         "imagen": "/imagenes/juego2/leon.png",
+        "sonido": "/sonidos/juego2/leon.mp3",
         "esIntruso": true
       }
     ],
@@ -32,16 +35,19 @@
       {
         "nombre": "Vaca",
         "imagen": "/imagenes/juego2/vaca.png",
+        "sonido": "/sonidos/juego2/vaca.wav",
         "esIntruso": false
       },
       {
         "nombre": "Oveja",
         "imagen": "/imagenes/juego2/oveja.png",
+        "sonido": "/sonidos/juego2/oveja.wav",
         "esIntruso": false
       },
       {
         "nombre": "Cocodrilo",
         "imagen": "/imagenes/juego2/cocodrilo.png",
+        "sonido": "/sonidos/juego2/cocodrilo.mp3",
         "esIntruso": true
       }
     ],
@@ -58,16 +64,19 @@
       {
         "nombre": "Gallina",
         "imagen": "/imagenes/juego2/gallina.png",
+        "sonido": "/sonidos/juego1/gallina.mp3",
         "esIntruso": false
       },
       {
         "nombre": "Chancho",
         "imagen": "/imagenes/juego2/chancho.png",
+        "sonido": "/sonidos/juego1/chancho.pm3 ",
         "esIntruso": false
       },
       {
         "nombre": "Elefante",
         "imagen": "/imagenes/juego2/elefante.png",
+        "sonido": "/sonidos/juego2/elefante.mp3",
         "esIntruso": true
       }
     ],
@@ -84,16 +93,19 @@
       {
         "nombre": "Caballo",
         "imagen": "/imagenes/juego2/caballo.png",
+        "sonido": "/sonidos/juego1/caballo.mp3",
         "esIntruso": false
       },
       {
         "nombre": "Vaca",
         "imagen": "/imagenes/juego2/vaca.png",
+        "sonido": "/sonidos/juego2/vaca.wav",
         "esIntruso": false
       },
       {
         "nombre": "Tiburón",
         "imagen": "/imagenes/juego2/tiburon.png",
+        "sonido": "/sonidos/juego2/tiburon.mp3",
         "esIntruso": true
       }
     ],
@@ -111,16 +123,19 @@
       {
         "nombre": "Oveja",
         "imagen": "/imagenes/juego2/oveja.png",
+        "sonido": "/sonidos/juego2/oveja.wav",
         "esIntruso": false
       },
       {
         "nombre": "Perro",
         "imagen": "/imagenes/juego2/perro.png",
+        "sonido": "/sonidos/juego2/perro.mp3",
         "esIntruso": false
       },
       {
         "nombre": "Pingüino",
         "imagen": "/imagenes/juego2/pinguino.png",
+        "sonido": "/sonidos/juego2/pinguino.mp3",
         "esIntruso": true
       }
     ],

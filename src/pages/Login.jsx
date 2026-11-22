@@ -81,53 +81,82 @@ const manejarPasswordDocente = async (e) => {
 
 
   return (
-    <Container maxWidth="sm"> 
 
+    <Box
+  sx={{
+    backgroundImage: 'url(/imagenes/GranjaLogin.png)',
+    backgroundSize: '100% 100%',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    minHeight: '100vh',
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '20px',
+    boxSizing: 'border-box'
+  }}
+>
+  <Container maxWidth="sm">
+    {/* 2️⃣ LA TARJETA DEL FORMULARIO: Fondo blanco semitransparente */}
+    <Paper
+      elevation={4}
+      sx={{
+        p: 4,
+        borderRadius: 6,
+        background: 'linear-gradient(135deg, rgba(235, 75, 75, 0.95) 0%, rgba(12, 9, 193, 0.9) 100%)',
+        backgroundColor: 'rgba(255, 255, 255, 0.95)',
+        boxShadow: '0 8px 24px rgba(0,0,0,0.3)',
+        overflow: 'hidden'
+      }}
+    >
 
-      <Paper elevation={1} sx={{ p: 4, mt: 6, borderRadius: 18 }}>
+      <Box
+    component="img"
+    src="/imagenes/GranjaLoginFormulario.png" // 👈 Poné la ruta de tu foto (granja, logo o animalitos)
+    alt="Ilustración Granja"
+    sx={{
+      objectFit: 'contain',
+      width: '100%',
+      height:300,
+      objectFit: 'cover',
+      borderRadius: 4,
+      mb: 3,
+      boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
+    }}
+  />
+      {/* 1. TÍTULO Y SUBTÍTULO */}
+      <Typography
+        variant="h4"
+        component="h1"
+        gutterBottom
+        align="center"
+        fontWeight="bold"
+      >
+        {esDocente ? 'Acceso Docente 👩‍🏫' : '¡Bienvenido a la aventura! 🚜'}
+      </Typography>
 
+      <Typography
+        variant="h5"
+        align="center"
+        component="h1"
+        sx={{ mb: 1, color: '#0b0909' }}
+      >
+        {esDocente
+          ? 'Hola Profe, ingresá tu contraseña para ver los puntajes.'
+          : 'Escribí tu nombre para comenzar a jugar.'}
+      </Typography>
 
-        {/* 1. TÍTULO Y SUBTÍTULO (Cambian según esDocente) */}
+      {/* 2. ALERTA DE ERROR */}
+      {error && (
+        <Alert severity="error" sx={{ mb: 2 }}>
+          {error}
+        </Alert>
+      )}
 
-<Typography variant="h4" component="h1" gutterBottom align="center">
-  {esDocente ? 'Acceso Docente 👩‍🏫' : '¡Bienvenido a la aventura!'}
-</Typography>
-
-<Typography variant="body1" align="center" sx={{ mb: 3 }}>
-  {esDocente
-    ? 'Hola Profe, ingresá tu contraseña para ver los puntajes.'
-    : 'Escribí tu nombre para comenzar a jugar.'}
-</Typography>
-
-{/* 2. ALERTA DE ERROR (Solo aparece si hay un error) */}
-
-{error && (
-  <Alert severity="error" sx={{ mb: 2 }}>
-    {error}
-  </Alert>
-)}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        {!esDocente ? (
-
-
-
-
+      {!esDocente ? (
+        /* FORMULARIO DEL ALUMNO */
         <Box component="form" onSubmit={guardarNombreYComenzar}>
-
-          
           <TextField
             label="Tu nombre"
             variant="outlined"
@@ -141,8 +170,6 @@ const manejarPasswordDocente = async (e) => {
               }
             }}
             sx={{ mb: 3 }}
-
-
           />
 
           <Button
@@ -150,20 +177,18 @@ const manejarPasswordDocente = async (e) => {
             variant="contained"
             fullWidth
             size="large"
+            sx={{
+              py: 1.5,
+              fontSize: '1.1rem',
+              fontWeight: 'bold'
+            }}
           >
             EMPIEZA A JUGAR NIÑO
           </Button>
         </Box>
-
-
-
-
-        ) : (
-
-        /* ACÁ EMPIEZA EL BOX NUEVO DEL DOCENTE  */
-
+      ) : (
+        /* FORMULARIO DEL DOCENTE */
         <Box component="form" onSubmit={manejarPasswordDocente}>
-
           <TextField
             label="Contraseña de Docente"
             type="password"
@@ -182,13 +207,21 @@ const manejarPasswordDocente = async (e) => {
             color="secondary"
             fullWidth
             size="large"
+            sx={{
+              py: 1.5,
+              fontWeight: 'bold'
+            }}
           >
             Ingresar al Panel
           </Button>
 
           <Button
             color="primary"
-            sx={{ mt: 2, textTransform: 'none' }}
+            fullWidth
+            sx={{
+              mt: 2,
+              textTransform: 'none'
+            }}
             onClick={() => {
               setEsDocente(false);
               setPasswordDocente('');
@@ -197,20 +230,19 @@ const manejarPasswordDocente = async (e) => {
           >
             ← Volver atrás
           </Button>
-
         </Box>
-
-  /*  ACÁ TERMINA EL BOX DEL DOCENTE  */
-
-)}
-
-
+      )}
+    </Paper>
+  </Container>
+</Box>
 
 
 
 
-      </Paper>
-    </Container>
+
+
+
+
   );
 };
 

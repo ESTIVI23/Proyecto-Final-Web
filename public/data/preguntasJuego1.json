@@ -3,6 +3,7 @@
     "id": 1,
     "animal": "Vaca",
     "imagen": "/imagenes/juego1/vaca.png",
+    "sonido": "/sonidos/juego1/vaca.wav",
     "icono": "🐮",
     "pregunta": "¿Qué come la vaca?",
     "opciones": [
@@ -15,6 +16,7 @@
     "id": 2,
     "animal": "Gallina",
     "imagen": "/imagenes/juego1/Gallina.png",
+    "sonido": "/sonidos/juego1/gallina.mp3",
     "icono": "🐔",
     "pregunta": "¿Qué come la gallina?",
     "opciones": [
@@ -27,6 +29,7 @@
     "id": 3,
     "animal": "Chancho",
     "imagen": "/imagenes/juego1/chancho.png",
+    "sonido": "/sonidos/juego1/chancho.mp3",
     "icono": "🐷",
     "pregunta": "¿Qué come el chancho?",
     "opciones": [
@@ -39,6 +42,7 @@
     "id": 4,
     "animal": "Oveja",
     "imagen": "/imagenes/juego1/oveja.png",
+    "sonido": "/sonidos/juego1/oveja.wav",
     "icono": "🐑",
     "pregunta": "¿Qué come la oveja?",
     "opciones": [
@@ -51,6 +55,7 @@
     "id": 5,
     "animal": "Caballo",
     "imagen": "/imagenes/juego1/caballo.png",
+    "sonido": "/sonidos/juego1/caballo.mp3",
     "icono": "🐴",
     "pregunta": "¿Qué come el caballo?",
     "opciones": [

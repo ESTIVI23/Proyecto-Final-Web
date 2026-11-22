@@ -1,85 +1,114 @@
 // React (para manejar memoria y efectos) 
-import { useState, useEffect } from 'react';
-
+import { useState, useEffect, useRef} from 'react';
 // React Router (para viajar de pantalla) 
 import { useNavigate } from 'react-router-dom';
-
 //Tu Hook (para guardar los puntos) 
 import { useDatosJuego } from '../hooks/useDatosJuegos';
 import { obtenerPreguntasJuego1 } from '../servicios/servicioPreguntas';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 const Juego1 = () => {
 // estados 
 
   const [preguntas, setPreguntas] = useState([]);
-
   const [rondaActual, setRondaActual] = useState(
   () => { return Number(localStorage.getItem('rondaJ1')) || 0; });    // xdxdxdxdxdxdxdxdxdxd
-
   // Estado nuevo: para saber si Axios sigue descargando el JSON
   const [cargando, setCargando] = useState(true);
+  const [mensaje, setMensaje] = useState(null); 
+  const [bloqueado, setBloqueado] = useState(false);
+  // 🧠 NUEVO LUGAR 1: Creás la memoria para el audio justo acá 
+  const audioRef = useRef(null);
+
+
 
   //hooks globales y Rutas
-  const { setPuntajeJ1 } = useDatosJuego();
-
+  const {puntajeJ1, setPuntajeJ1 } = useDatosJuego();
   const navigate = useNavigate();
+// 3️⃣ DECLARAMOS LA RONDA AQUÍ (¡Antes de los useEffect!) 
+   const ronda = preguntas[rondaActual];
+  
 
 
-  const { puntajeJ1 } = useDatosJuego(); // 👈 Extraés puntajeJ1 de tu mochila
+   
+
+// 🔊 NUEVO LUGAR 2: Modificás tu función reproducirSonido
+const reproducirSonido = () => {
+  if (!ronda?.sonido) return;
+
+  // Si ya había un audio sonando, lo apaga primero
+  if (audioRef.current) {
+    audioRef.current.pause();
+    audioRef.current.currentTime = 0;
+  }
+
+  const nuevoAudio = new Audio(ronda.sonido);
+
+  audioRef.current = nuevoAudio; // Guarda el audio en la memoria
+
+  nuevoAudio.play().catch(() => {});
+};
+
 
 // Se ejecuta automáticamente al abrir la pantalla
 useEffect(() => {
-
   // Llama a la función que usa Axios para ir al JSON
   obtenerPreguntasJuego1()
     .then((datos) => {
-
       //  Guarda el arreglo completo en el estado
       setPreguntas(datos);
       setCargando(false);
       //  Ya llegaron las preguntas, avisamos que terminó de cargar
-
     })
     .catch((error) => {
   console.error("Error al cargar:", error);
   setCargando(false);
-    });
-    
+    }); 
 }, []); // Este [] hace que se guarde todo el arreglo de preguntas
   //  solo una vez al abrir la pantalla
-
-
 // Este guarda la ronda en el navegador cada vez que avanza (0, 1, 2...)
 useEffect(() => { localStorage.setItem('rondaJ1', rondaActual); }, [rondaActual]);
 
 //  LÓGICA DE CLIC EN LA COMIDA ---
+
 const manejarRespuesta = (opcionSeleccionada) => {
+  // 1. Evitamos que vuelva a hacer clic si ya está bloqueado
+  if (bloqueado) return;
+  setBloqueado(true);
+  // 2. Averiguamos si la opción elegida es la correcta
+  const textoOpcion = opcionSeleccionada.texto
+    ? opcionSeleccionada.texto
+    : opcionSeleccionada;
+  const esCorrecta =
+    opcionSeleccionada.esCorrecta !== undefined
+      ? opcionSeleccionada.esCorrecta
+      : textoOpcion === ronda.correcta;
 
-//  Averiguamos si la opción elegida es la correcta
-const textoOpcion = opcionSeleccionada.texto ? opcionSeleccionada.texto :
-opcionSeleccionada;
-     const esCorrecta = opcionSeleccionada.esCorrecta !== undefined
-     ? opcionSeleccionada.esCorrecta
-     : textoOpcion === ronda.correcta;
+  // 3. Guardamos el mensaje y sumamos puntos si acertó
+  if (esCorrecta) {
+    setPuntajeJ1((puntajeAnterior) => puntajeAnterior + 10);
+    setMensaje({
+      tipo: 'success',
+      texto: '¡Correcto! Le diste su comida favorita 🌽'
+    });
+  } else {
+    setMensaje({
+      tipo: 'error',
+      texto: '¡Ups! Esa no es su comida ❌'
+    });
+  }
+  // 4. Esperamos 1.5 segundos antes de avanzar de ronda
+  setTimeout(() => {
+    setMensaje(null);
+    setBloqueado(false);
 
-     //  Si acertó, le sumamos 10 puntos en la mochila global
-     if (esCorrecta) {
-       setPuntajeJ1((puntajeAnterior) => puntajeAnterior + 10);
-      }
-
-    //  Verificamos si quedan más rondas o si terminamos
-    
-   if (rondaActual < preguntas.length - 1) {
-
-  setRondaActual(rondaActual + 1);
-
-} else {
-   localStorage.removeItem('rondaJ1');  
-  navigate('/juego2');
-
-}
-
+    if (rondaActual < preguntas.length - 1) {
+      setRondaActual((prev) => prev + 1);
+    } else {
+      localStorage.removeItem('rondaJ1');
+      navigate('/juego2');
+    }
+  }, 1500);
 };
 
 // Si Axios todavía está buscando el JSON, mostramos este texto
@@ -90,109 +119,202 @@ if (cargando) {
 if (!preguntas.length) {
   return <h2 style={{ textAlign: 'center' }} >No se encontraron preguntas.</h2>;
 }
-// 3. Extraemos el animal de la ronda actual
-// Como rondaActual vale 0, saca la primera ronda.
-const ronda = preguntas[rondaActual];
-
 console.log("Ronda actual:", rondaActual);
 console.log("Animal actual:", ronda.animal);
-
 // --- PARTE DE PANTALLA DEL JUEGO (1. RONDA) ---
 
-return (
-
-
-  
-  <Box
-    sx={{
-      backgroundImage: 'url(/imagenes/Granja.png)', // Ruta de la imagen en public/imagenes/granja.jpg
-      backgroundSize: '100% 100%',
-      backgroundPosition: 'center',
-      backgroundRepeat: 'no-repeat',
-      minHeight: '100vh',
-      width: '100%',
-      boxSizing: 'border-box',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: '20px',
-      textAlign: 'center'
-    }}
-  >
-
-<Box
-  sx={{
-    position: 'absolute',
-    top: '20px',
-    right: '20px',
-    backgroundColor: '#FFD700',
-    color: '#333',
-    padding: '8px 18px',
-    borderRadius: '20px',
-    fontSize: '20px',
-    fontWeight: 'bold',
-    boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
-    border: '2px solid #FFF'
-  }}
->
-  ⭐ {puntajeJ1} pts
-</Box>
-
-    
-
- <h3>
-  Ronda {rondaActual + 1} de {preguntas.length}
-</h3>
-
-<h2>
-  {ronda.pregunta}
-</h2>
+  return (
 
 
 
-    {/* Imagen del animal */}
-    {ronda.imagen && (
-      <img
-        src={ronda.imagen}
-        alt={ronda.animal}
-        width="380"
-        style={{ margin: '15px 0' }}
-      />
-    )}
-
-
-        
-    {/* Botones de las opciones */}
     <Box
-  sx={{
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    gap: 10,
-    maxWidth: '500px',
-    width: '100%',
-    margin: '0 auto'
-  }}
->
-  {ronda.opciones.map((opcion, index) => (
-    <button
-      key={index}
-      onClick={() => manejarRespuesta(opcion)}
-      style={{
-        padding: '10px 20px',
-        fontSize: '28px',
-        cursor: 'pointer',
-        borderRadius: '8px'
+      sx={{
+        backgroundImage: 'url(/imagenes/Granja.png)', // Ruta de la imagen en public/imagenes/granja.jpg
+        backgroundSize: '100% 100%',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        minHeight: '100vh',
+        width: '100%',
+        boxSizing: 'border-box',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '20px',
+        textAlign: 'center'
       }}
     >
-      {opcion.texto ? opcion.texto : opcion}
-    </button>
-  ))}
+
+      <Box
+        sx={{
+          position: 'absolute',
+          top: '20px',
+          right: '20px',
+          backgroundColor: '#FFD700',
+          color: '#333',
+          padding: '8px 18px',
+          borderRadius: '20px',
+          fontSize: '20px',
+          fontWeight: 'bold',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+          border: '2px solid #FFF'
+        }}
+      >
+        ⭐ {puntajeJ1} pts
+      </Box>
+
+
+
+     {/* Título de la Ronda \*/}
+      <Typography
+        variant="h5"
+        fontWeight="bold"
+        sx={{
+           backgroundColor: 'rgba(104, 100, 211, 0.95)',
+          color: '#daecdb',
+          px: 5,
+          py: 1.5,
+          borderRadius: 4,
+          boxShadow: '0 4px 10px rgba(0,0,0,0.2)',
+          mb: 3
+        }}
+      >
+        Ronda {rondaActual + 1} de {preguntas.length}
+      </Typography>
+
+
+
+
+
+     
+      <Typography
+        variant="h4"
+        fontWeight="bold"
+        sx={{
+          backgroundColor: 'rgba(104, 100, 211, 0.95)',
+          color: '#021203',
+          px: 5,
+          py: 1.5,
+          borderRadius: 4,
+          boxShadow: '0 4px 10px rgba(0,0,0,0.2)',
+          mb: 3
+        }}
+      >
+        {ronda.pregunta}
+      </Typography>
+
+
+
+<Typography
+ 
+  sx={{
+    backgroundColor: 'rgba(104, 100, 211, 0.95)',
+    color: '#ffffff', // 💡 Tip: blanco suele resaltar mejor con fondos violetas/azules
+    px: 5,
+    py: 1.5,
+    borderRadius: 4,
+    boxShadow: '0 4px 10px rgba(0,0,0,0.2)',
+    mb: 3,
+    cursor: 'pointer', // 👈 Para que se note que se puede hacer clic
+    fontWeight: 'bold',
+    fontSize: '1.2rem',
+    display: 'inline-block' // 👈 Para que el fondo violeta envuelva solo el texto y no toda la pantalla
+  }}
+>
+  🔊 ¡Tocá la foto para escuchar a la {ronda.animal}!
+</Typography>
+
+
+
+
+
+      {/* Imagen del animal */}
+      {ronda.imagen && (
+        <img
+          src={ronda.imagen}
+          alt={ronda.animal}
+          width="380"
+          onClick={reproducirSonido} // 👈 ¡ACÁ SE CONECTA EL CLIC!
+          style={{ cursor: 'pointer', margin: '15px 0' }}
+        />
+      )}
+
+
+
+      {/* Botones de las opciones */}
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'center',
+          gap: 10,
+          maxWidth: '500px',
+          width: '100%',
+          margin: '0 auto'
+        }}
+      >
+        {ronda.opciones.map((opcion, index) => (
+          <button
+            key={index}
+            onClick={() => manejarRespuesta(opcion)}
+            disabled={bloqueado}
+
+            style={{
+              padding: '10px 20px',
+              fontSize: '28px',
+              
+
+              cursor: bloqueado ? 'not-allowed' : 'pointer', // 👈 2\. Manito normal o ícono de bloqueado 
+              opacity: bloqueado ? 0.6 : 1, // 👈 3\. Transparencia mientras espera
+
+              //cursor: 'pointer',
+
+
+
+
+              borderRadius: '8px'
+            }}
+          >
+            {opcion.texto ? opcion.texto : opcion}
+          </button>
+        ))}
+      </Box>
+
+      {/* Mensaje de acierto o error */}
+
+        {mensaje &&(
+
+<Box sx={{ mt: 3 }}>
+  <Typography
+    variant="h5"
+    color={mensaje.tipo === 'success' ? 'success.main' : 'error.main'}
+    fontWeight="bold"
+    sx={{
+      backgroundColor: 'white',
+      display: 'inline-block',
+      px: 3,
+      py: 1.5,
+      borderRadius: 3,
+      boxShadow: 3
+    }}
+  >
+    {mensaje.texto}
+  </Typography>
 </Box>
 
-  </Box>
-);
+
+
+
+
+
+        )} 
+
+
+
+
+
+    </Box>
+  );
 
 
 
