@@ -1,10 +1,10 @@
-import { useState, useEffect, useRef} from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 // Hook (para guardar los puntos del Juego 2)
 import { useDatosJuego } from '../hooks/useDatosJuegos';
 //  Servicio (para obtener las preguntas del Juego 2 mediante Axios)
 import { obtenerPreguntasJuego2 } from '../servicios/servicioPreguntas';
-import {Container, Box, Typography, Card, CardActionArea, CardMedia, CardContent} from '@mui/material';
+import { Container, Box, Typography, Card, CardActionArea, CardMedia, CardContent } from '@mui/material';
 
 const Juego2 = () => {
      //el primer useeffect que se ejecuta al abrir la pantalla, para traer las preguntas del JSON
@@ -20,40 +20,26 @@ const Juego2 = () => {
      const [mensaje, setMensaje] = useState('');
      //  Para bloquear los botones de respuesta mientras se muestra el mensaje
      const [bloqueado, setBloqueado] = useState(false);
-
-     // 2️⃣ MEMORIA PARA EL AUDIO 
+     //  MEMORIA PARA EL AUDIO 
      const audioRef = useRef(null);
-
-     // 3️⃣ DECLARAMOS LA RONDA AQUÍ (Bien arriba para que todos la usen) 
+     //  DECLARAMOS LA RONDA AQUÍ (Bien arriba para que todos la usen) 
      const ronda = preguntas[rondaActual];
-
      //  LAS HERRAMIENTAS (Hooks globales y Navegación)
      const { puntajeJ2, setPuntajeJ2 } = useDatosJuego(); // Para guardar los puntos del Juego 2
      const navigate = useNavigate(); // Para ir a la pantalla de /resultados
+     //  FUNCIÓN PARA REPRODUCIR EL SONIDO DE LA CARD TOCADA
+     const reproducirSonido = (rutaSonido) => {
+          if (!rutaSonido) return;
 
-
-
-// 5️⃣ FUNCIÓN PARA REPRODUCIR EL SONIDO DE LA CARD TOCADA
-const reproducirSonido = (rutaSonido) => {
-  if (!rutaSonido) return;
-
-  // Si había un audio sonando, lo frena primero
-  if (audioRef.current) {
-    audioRef.current.pause();
-    audioRef.current.currentTime = 0;
-  }
-
-  const nuevoAudio = new Audio(rutaSonido);
-
-  audioRef.current = nuevoAudio;
-
-  nuevoAudio.play().catch(() => {});
-};
-
-
-
-
-
+          // Si había un audio sonando, lo frena primero
+          if (audioRef.current) {
+               audioRef.current.pause();
+               audioRef.current.currentTime = 0;
+          }
+          const nuevoAudio = new Audio(rutaSonido);
+          audioRef.current = nuevoAudio;
+          nuevoAudio.play().catch(() => { });
+     };
 
      //  Descarga las preguntas del JSON usando Axios al abrir la pantalla
      useEffect(() => {
@@ -62,11 +48,11 @@ const reproducirSonido = (rutaSonido) => {
                setPreguntas(datos);// Avisa que terminó la carga
                setCargando(false);
           })
-          .catch((error) => {
-               // Muestra un error si no se pudieron cargar las preguntas
-               console.error("Error al cargar las preguntas del Juego 2:", error);
-               setCargando(false);
-          });
+               .catch((error) => {
+                    // Muestra un error si no se pudieron cargar las preguntas
+                    console.error("Error al cargar las preguntas del Juego 2:", error);
+                    setCargando(false);
+               });
      }, []);
 
 
@@ -75,11 +61,8 @@ const reproducirSonido = (rutaSonido) => {
           localStorage.setItem('rondaJ2', rondaActual);
      }, [rondaActual]);
 
-
-
      // --- PASO B: LÓGICA DE SELECCIÓN DE ANIMAL ---
      const manejarRespuesta = (opcionSeleccionada) => {
-
           if (bloqueado) return; // Congela los clics durante el cartel de 1.5s
           setBloqueado(true); // Bloquea los botones de respuesta
           const rondaActualDatos = preguntas[rondaActual]; // Obtiene la pregunta actual
@@ -104,9 +87,6 @@ const reproducirSonido = (rutaSonido) => {
                }
           }, 1800);
      }
-
-    
-
      return (
           <Box
                sx={{
@@ -144,15 +124,13 @@ const reproducirSonido = (rutaSonido) => {
                          ⭐ Puntos: {puntajeJ2}
                     </Typography>
                </Box>
-
                <Container maxWidth="md" sx={{ textAlign: 'center' }}>
-
                     {/* 1. Título principal */}
                     <Typography
                          variant="h4"
                          fontWeight="bold"
                          gutterBottom
-                         
+
                          sx={{
                               backgroundColor: 'rgba(104, 100, 211, 0.95)',
                               color: '#ffffff',
@@ -165,7 +143,6 @@ const reproducirSonido = (rutaSonido) => {
                               fontSize: '1.8rem', // Aumentamos el tamaño para que sea un verdadero título
                               display: 'inline-block'
                          }}
-
                     >
                          Juego 2: El Intruso 🚜
                     </Typography>
@@ -173,20 +150,19 @@ const reproducirSonido = (rutaSonido) => {
                     {/* 2. Subtítulo indicando la ronda actual */}
                     <Typography
                          variant="h6"
-                         
-sx={{
-  backgroundColor: 'rgba(104, 100, 211, 0.95)',
-  color: '#ffffff',
-  px: 3,
-  py: 0.8,
-  borderRadius: 4,
-  boxShadow: '0 4px 10px rgba(0,0,0,0.2)',
-  mb: 2,
-  fontWeight: 'bold',
-  fontSize: '1.1rem',
-  display: 'inline-block'
-}}
 
+                         sx={{
+                              backgroundColor: 'rgba(104, 100, 211, 0.95)',
+                              color: '#ffffff',
+                              px: 3,
+                              py: 0.8,
+                              borderRadius: 4,
+                              boxShadow: '0 4px 10px rgba(0,0,0,0.2)',
+                              mb: 2,
+                              fontWeight: 'bold',
+                              fontSize: '1.1rem',
+                              display: 'inline-block'
+                         }}
                     >
                          Ronda {rondaActual + 1} de {preguntas.length} — ¿Cuál animal NO vive en la granja?
                     </Typography>
@@ -209,20 +185,16 @@ sx={{
                     >
                          🔊 ¡Tocá la tarjeta para escuchar al animal y encontrar al intruso!
                     </Typography>
-
-
                     {/* Las 3 Tarjetas de animales */}
                     <Box sx={{ display: 'flex', justifyContent: 'center', gap: 3, flexWrap: 'wrap', my: 2 }}>
                          {ronda?.opciones?.map((opcion, index) => (
-                              <Card key={index} sx={{ width: 200, borderRadius: 4, boxShadow: 5,
+                              <Card key={index} sx={{
+                                   width: 200, borderRadius: 4, boxShadow: 5,
                                    opacity: bloqueado ? 0.6 : 1, // 👈 Si está bloqueado, se pone al 60% de opacidad
-                                   
-                               }}>
+
+                              }}>
                                    <CardActionArea
                                         onClick={() => { reproducirSonido(opcion.sonido); manejarRespuesta(opcion); }}
-
-
-
                                         disabled={bloqueado}
                                    >
                                         <CardMedia
@@ -238,12 +210,6 @@ sx={{
                                              </Typography>
                                         </CardContent>
                                    </CardActionArea>
-
-
-
-
-
-
                               </Card>
                          ))}
                     </Box>
@@ -268,17 +234,9 @@ sx={{
                               </Typography>
                          </Box>
                     )}
-
                </Container>
 
-
           </Box>
-
-
-
      );
-
-
-
 };
 export default Juego2;

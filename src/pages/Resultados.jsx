@@ -1,88 +1,72 @@
 import { useEffect } from 'react';
 import { Box, Container, Typography, Button, Paper } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-
 import { useDatosJuego } from '../hooks/useDatosJuegos';
 
-
 const Resultados = () => {
-     
-const { nombre, puntajeJ1, puntajeJ2, reiniciarJuego } = useDatosJuego();
- const navigate = useNavigate();
+  const { nombre, puntajeJ1, puntajeJ2, reiniciarJuego } = useDatosJuego();
+  const navigate = useNavigate();
+  // Suma total de los puntos acumulados 
+  const puntajeTotal = (puntajeJ1 || 0) + (puntajeJ2 || 0);
+  // Guardar automáticamente la partida al llegar a Resultados (Evitando duplicados)
+  useEffect(() => {
+    if (nombre) {
 
-// Suma total de los puntos acumulados 
-const puntajeTotal = (puntajeJ1 || 0) + (puntajeJ2 || 0);
+      // 1. Leemos lo que había guardado
+      const historialPrevio =
+        JSON.parse(localStorage.getItem('historialJuegos')) || [];
 
+      //  Nos fijamos cuál fue la última partida registrada
+      const ultimaPartida =
+        historialPrevio[historialPrevio.length - 1];
 
-     // Guardar automáticamente la partida al llegar a Resultados (Evitando duplicados)
-useEffect(() => {
-  if (nombre) {
+      //  Verificamos si este mismo jugador ya se guardó recién
+      const yaSeGuardo =
+        ultimaPartida &&
+        ultimaPartida.nombre === nombre &&
+        ultimaPartida.puntajeJ1 === (puntajeJ1 || 0) &&
+        ultimaPartida.puntajeJ2 === (puntajeJ2 || 0);
 
-    // 1. Leemos lo que había guardado
-    const historialPrevio =
-      JSON.parse(localStorage.getItem('historialJuegos')) || [];
-
-    //  Nos fijamos cuál fue la última partida registrada
-    const ultimaPartida =
-      historialPrevio[historialPrevio.length - 1];
-
-    //  Verificamos si este mismo jugador ya se guardó recién
-    const yaSeGuardo =
-      ultimaPartida &&
-      ultimaPartida.nombre === nombre &&
-      ultimaPartida.puntajeJ1 === (puntajeJ1 || 0) &&
-      ultimaPartida.puntajeJ2 === (puntajeJ2 || 0);
-
-    //  Si NO está guardado todavía, lo agregamos
-    if (!yaSeGuardo) {
-      const nuevaPartida = {
-        nombre: nombre,
-        puntajeJ1: puntajeJ1 || 0,
-        puntajeJ2: puntajeJ2 || 0,
-      };
-
-      const historialActualizado = [
-        ...historialPrevio,
-        nuevaPartida
-      ];
-
-      localStorage.setItem(
-        'historialJuegos',
-        JSON.stringify(historialActualizado)
-      );
+      //  Si NO está guardado todavía, lo agregamos
+      if (!yaSeGuardo) {
+        const nuevaPartida = {
+          nombre: nombre,
+          puntajeJ1: puntajeJ1 || 0,
+          puntajeJ2: puntajeJ2 || 0,
+        };
+        const historialActualizado = [
+          ...historialPrevio,
+          nuevaPartida
+        ];
+        localStorage.setItem(
+          'historialJuegos',
+          JSON.stringify(historialActualizado)
+        );
+      }
     }
-  }
-}, [nombre, puntajeJ1, puntajeJ2]);
-
-
-
-
-
-
- // Función para volver a jugar
+  }, [nombre, puntajeJ1, puntajeJ2]);
+  // Función para volver a jugar
   const volverAJugar = () => {
     reiniciarJuego();
     navigate('/');
   };
-
-
-     return (
+  return (
     <Box
       sx={{
-                    backgroundImage: 'url(/imagenes/Granja.png)', // Ruta de la imagen en public/imagenes/granja.jpg
-                    backgroundSize: '100% 100%',
-                    backgroundPosition: 'center',
-                    backgroundRepeat: 'no-repeat',
-                    minHeight: '100vh',
-                    width: '100%',
-                    boxSizing: 'border-box',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: '20px',
-                    textAlign: 'center'
-               }}
+        backgroundImage: 'url(/imagenes/Granja.png)', // Ruta de la imagen en public/imagenes/granja.jpg
+        backgroundSize: '100% 100%',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        minHeight: '100vh',
+        width: '100%',
+        boxSizing: 'border-box',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '20px',
+        textAlign: 'center'
+      }}
     >
       <Container maxWidth="sm">
         <Paper
@@ -152,6 +136,7 @@ useEffect(() => {
         </Paper>
       </Container>
     </Box>
-  ); };
-     
-     export default Resultados;
+  );
+};
+
+export default Resultados;
