@@ -14,10 +14,6 @@ const [error, setError] = useState('');
 
   //  Hook de React Router para cambiar de pantalla
   const navigate = useNavigate();
-
-
-
-
   // Función al presionar "Comenzar"
   const guardarNombreYComenzar = (e) => {   
     e.preventDefault();
@@ -49,7 +45,6 @@ if (nombreLimpio === 'tanos') {
 }
 };
 
-
 //  Función para validar la clave del docente
 const manejarPasswordDocente = async (e) => {
 
@@ -77,9 +72,6 @@ const manejarPasswordDocente = async (e) => {
 };
 
 
-
-
-
   return (
 
     <Box
@@ -98,7 +90,7 @@ const manejarPasswordDocente = async (e) => {
   }}
 >
   <Container maxWidth="sm">
-    {/* 2️⃣ LA TARJETA DEL FORMULARIO: Fondo blanco semitransparente */}
+    {/*  LA TARJETA DEL FORMULARIO: Fondo blanco semitransparente */}
     <Paper
       elevation={4}
       sx={{
@@ -146,14 +138,12 @@ const manejarPasswordDocente = async (e) => {
           ? 'Hola Profe, ingresá tu contraseña para ver los puntajes.'
           : 'Escribí tu nombre para comenzar a jugar.'}
       </Typography>
-
       {/* 2. ALERTA DE ERROR */}
       {error && (
         <Alert severity="error" sx={{ mb: 2 }}>
           {error}
         </Alert>
       )}
-
       {!esDocente ? (
         /* FORMULARIO DEL ALUMNO */
         <Box component="form" onSubmit={guardarNombreYComenzar}>
@@ -235,15 +225,6 @@ const manejarPasswordDocente = async (e) => {
     </Paper>
   </Container>
 </Box>
-
-
-
-
-
-
-
-
   );
 };
-
 export default Login;
