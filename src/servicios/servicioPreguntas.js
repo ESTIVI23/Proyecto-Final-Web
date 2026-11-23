@@ -2,9 +2,11 @@ import axios from 'axios';
 
 // Función asíncrona para traer las preguntas del Juego 1
 export const obtenerPreguntasJuego1 = async () => {
+  console.log("➡️ 1\. Se ejecutó obtenerPreguntasJuego1(). Por hacer la petición a Axios...");
   try {
     // 1. Axios busca el archivo JSON en la carpeta public
     const respuesta = await axios.get('/data/preguntasJuego1.json');
+    console.log("DATOS RECIBIDOS DESDE AXIOS:", respuesta.data);
   
     // 2. Retornamos los datos del JSON
     return respuesta.data;  
