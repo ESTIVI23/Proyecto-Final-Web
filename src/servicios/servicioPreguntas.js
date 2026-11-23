@@ -4,7 +4,7 @@ import axios from 'axios';
 export const obtenerPreguntasJuego1 = async () => {
   try {
     // 1. Axios busca el archivo JSON en la carpeta public
-    const respuesta = await axios.get('/public/data/preguntasJuego1.json');
+    const respuesta = await axios.get('/data/preguntasJuego1.json');
 
     // 2. Retornamos los datos del JSON
     return respuesta.data;
@@ -21,7 +21,7 @@ export const obtenerPreguntasJuego1 = async () => {
 export const obtenerPreguntasJuego2 = async () => {
   try {
     // 1. Axios busca el archivo JSON en la carpeta public
-    const respuesta = await axios.get('/public/data/preguntasJuego2.json');
+    const respuesta = await axios.get('/data/preguntasJuego2.json');
 
     // 2. Retornamos los datos del JSON
     return respuesta.data;
