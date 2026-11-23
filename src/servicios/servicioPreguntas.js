@@ -7,7 +7,7 @@ export const obtenerPreguntasJuego1 = async () => {
     const respuesta = await axios.get('/data/preguntasJuego1.json');
   
     // 2. Retornamos los datos del JSON
-    return respuesta.data;
+    return respuesta.data;  
 
   } catch (error) {
     console.error("Error al cargar las preguntas:", error);
