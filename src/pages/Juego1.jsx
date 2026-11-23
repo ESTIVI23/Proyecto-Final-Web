@@ -39,6 +39,7 @@ const Juego1 = () => {
       .then((datos) => {
         //  Guarda el arreglo completo en el estado
         setPreguntas(datos);
+        console.log("¡Preguntas recibidas con éxito del JSON!:", datos);
         setCargando(false);
         //  Ya llegaron las preguntas, avisamos que terminó de cargar
       })
@@ -46,7 +47,8 @@ const Juego1 = () => {
         console.error("Error al cargar:", error);
         setCargando(false);
       });
-  }, []); // Este [] hace que se guarde todo el arreglo de preguntas
+  }, []); // Este [] hace que se guarde todo el arreglo de preguntas}
+
   //  solo una vez al abrir la pantalla
   // Este guarda la ronda en el navegador cada vez que avanza (0, 1, 2...)
   useEffect(() => { localStorage.setItem('rondaJ1', rondaActual); }, [rondaActual]);
