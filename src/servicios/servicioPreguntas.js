@@ -5,7 +5,7 @@ export const obtenerPreguntasJuego1 = async () => {
   try {
     // 1. Axios busca el archivo JSON en la carpeta public
     const respuesta = await axios.get('/data/preguntasJuego1.json');
-
+  
     // 2. Retornamos los datos del JSON
     return respuesta.data;
 
