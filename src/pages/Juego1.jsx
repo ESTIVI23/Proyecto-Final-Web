@@ -108,7 +108,7 @@ const Juego1 = () => {
     <Box
       sx={{
         backgroundImage: 'url(/imagenes/Granja.png)', // Ruta de la imagen en public/imagenes/granja.jpg
-        backgroundSize: '100% 100%',
+        backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
         minHeight: '100vh',
@@ -124,9 +124,9 @@ const Juego1 = () => {
     >
       <Box
         sx={{
-          position: 'absolute',
-          top: '20px',
-          right: '20px',
+          position: { xs: 'relative', sm: 'absolute' },
+          top:{ sm: '20px' },
+          right: { sm: '20px' },
           backgroundColor: '#FFD700',
           color: '#333',
           padding: '8px 18px',
